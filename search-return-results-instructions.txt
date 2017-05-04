@@ -1,0 +1,53 @@
+Copy the code listed below and incorporate rate the three bodies in with the correct
+file.  HTML goes in index,  Javascript goes in JS file.
+We will need to change the HTML file by adding script for a search bar. We will need to
+add CSS styling to change the look of our search bar.
+
+
+HTML
+
+Place this in the header.
+
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+
+
+Place this HTML in with the search feature code. As said, we will have to swap out the data for what is relevent to our project.
+
+<form>
+ <input type="text" name="q"/>
+ <script type="text/javascript">var x = document.getElementById("q").value;     </script>
+ <input type="button" value="search" onclick="showUser(x)">
+ </form>
+ <br>
+ <div id="txtHint"><b>Person info will be listed here...</b></div>
+
+
+
+Place this in the JS file.
+
+
+
+function showUser() {
+var str = document.getElementById("txtHint").value;
+if (str == "") {
+  document.getElementById("txtHint").innerHTML = "";
+  return;
+} else {
+  if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+  } else {
+      // code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+     document.getElementById("txtHint").innerHTML =
+
+ xmlhttp.responseText;
+      }
+  }
+  xmlhttp.open("GET","getuser.php?q="+str,true);
+  xmlhttp.send();
+}
+}
