@@ -1,0 +1,59 @@
+Copy the code listed below and incorporate rate the three bodies in with the correct
+file.  HTML goes in index,  Javascript goes in JS file.
+We will need to change the HTML table to match the filters we choose as well as update
+the data with actual data relevent to our site.  The options listed below are just
+as an example.
+
+HTML
+
+Place this in the header.
+
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+
+
+Place this HTML in with the search feature code. As said, we will have to swap out the data for what is relevent to our project.
+
+<h1 id="header">DVD Collection</h1>
+
+<ul id="list">
+  <li><a href="#">Batman</a></li>
+  <li><a href="#">Ice Age</a></li>
+  <li><a href="#">Star Trek (2009)</a></li>
+  <li><a href="#">Tremors</a></li>
+  …
+<ul>
+
+Place this in the JS file.
+
+
+
+	(function ($) {
+	  jQuery.expr[':'].Contains = function(a,i,m){
+		  return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+	  };
+
+	  function listFilter(header, list) {
+		var form = $("<form>").attr({"class":"filterform","action":"#"}),
+			input = $("<input>").attr({"class":"filterinput","type":"text"});
+		$(form).append(input).appendTo(header);
+
+		$(input)
+		  .change( function () {
+			var filter = $(this).val();
+			if(filter) {
+			  $(list).find("a:not(:Contains(" + filter + "))").parent().slideUp();
+			  $(list).find("a:Contains(" + filter + ")").parent().slideDown();
+			} else {
+			  $(list).find("li").slideDown();
+			}
+			return false;
+		  })
+		.keyup( function () {
+			$(this).change();
+		});
+	  }
+
+	  $(function () {
+		listFilter($("#header"), $("#list"));
+	  });
+	}(jQuery));
